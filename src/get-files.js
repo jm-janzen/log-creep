@@ -1,7 +1,6 @@
 import fs from 'fs'
 
 
-// TODO Build and return "file" objects, with metadata
 export function getFiles(path = '/', pattern) {
     const { BASE_DIR } = process.env
     // TODO Check if dir, else throw err
