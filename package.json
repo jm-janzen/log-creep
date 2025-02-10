@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/jm-janzen/log-creep/issues"
   },
-  "homepage": "https://github.com/jm-janzen/log-creep#readme"
+  "homepage": "https://github.com/jm-janzen/log-creep#readme",
+  "dependencies": {
+    "express": "^4.21.2"
+  }
 }
