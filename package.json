@@ -1,0 +1,19 @@
+{
+  "name": "log-creep",
+  "version": "0.0.0",
+  "description": "Service to expose system logs of the host machine",
+  "main": "creep.js",
+  "scripts": {
+    "test": "nah lol"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jm-janzen/log-creep.git"
+  },
+  "author": "JM Janzen",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jm-janzen/log-creep/issues"
+  },
+  "homepage": "https://github.com/jm-janzen/log-creep#readme"
+}
