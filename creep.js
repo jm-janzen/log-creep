@@ -11,6 +11,8 @@ app.get('/health', (_req, res) => {
 })
 
 app.get('/get-files', (req, res) => {
+    // TODO Add includeDirs query param
+    // or maybe just another endpoint for dirs, idk
     const { path = '/', pattern = '' } = req.query
     const items = getFiles(path, pattern)
 
