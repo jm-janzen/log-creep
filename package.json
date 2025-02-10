@@ -5,7 +5,8 @@
   "main": "creep.js",
   "type": "module",
   "scripts": {
-    "test": "nah lol"
+    "test": "nah lol",
+    "dev": "nodemon --env-file=.env creep.js"
   },
   "repository": {
     "type": "git",
@@ -19,5 +20,8 @@
   "homepage": "https://github.com/jm-janzen/log-creep#readme",
   "dependencies": {
     "express": "^4.21.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.9"
   }
 }
