@@ -1,5 +1,6 @@
 import express from 'express'
 import { getFiles } from './src/get-files.js'
+import { getFileLines } from './src/get-file-lines.js'
 
 
 const PORT = 9002
@@ -22,6 +23,18 @@ app.get('/get-files', (req, res) => {
             pattern,
             items,
             path,
+        }
+    })
+})
+
+app.get('/get-file-lines', (req, res) => {
+    const { path = '/', numLines = '' } = req.query
+    const items = getFileLines(path, numLines)
+
+    res.send({
+        data: {
+            kind: 'file-lines',
+            items,
         }
     })
 })
