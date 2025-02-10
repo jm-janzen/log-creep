@@ -5,7 +5,7 @@ const PORT = 9002
 
 const app = express()
 
-app.get('/v1/health', (_req, res) => {
+app.get('/health', (_req, res) => {
     res.json({ status: 'ok' })
 })
 
