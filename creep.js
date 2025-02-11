@@ -14,22 +14,22 @@ app.get('/health', (_req, res) => {
 app.get('/get-files', (req, res) => {
     // TODO Add includeDirs query param
     // or maybe just another endpoint for dirs, idk
-    const { path = '/', pattern = '' } = req.query
-    const items = getFiles(path, pattern)
+    const { path = '/', match = '' } = req.query
+    const items = getFiles(path, match)
 
     res.send({
         data: {
             kind: 'files',
-            pattern,
+            match,
             items,
             path,
         }
     })
 })
 
-app.get('/get-file-lines', (req, res) => {
-    const { path = '/', numLines = '', pattern } = req.query
-    const items = getFileLines(path, numLines, pattern)
+app.get('/get-file-lines', async (req, res) => {
+    const { path = '/', numLines, match } = req.query
+    const items = await getFileLines(path, numLines, match)
 
     res.send({
         data: {

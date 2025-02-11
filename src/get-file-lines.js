@@ -1,7 +1,8 @@
 import fs from 'fs'
+import readline from 'readline'
 
 
-export function getFileLines(filePath, numLines = 0, pattern) {
+export async function getFileLines(filePath, numLines = 0, match = '') {
     const { BASE_DIR } = process.env
 
     // TODO Actually handle large files efficiently
@@ -9,7 +10,7 @@ export function getFileLines(filePath, numLines = 0, pattern) {
         .readFileSync(`${BASE_DIR}/${filePath}`)
         .toString()
         .split(/\n/)
-        .filter(line => RegExp(pattern).test(line)) // FIXME This is horribly, horribly inefficient
+        .filter(line => line.includes(match)) // FIXME This is horribly, horribly inefficient
         .slice(numLines * -1)
         .reverse()
 }
