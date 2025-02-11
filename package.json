@@ -5,6 +5,7 @@
   "main": "creep.js",
   "type": "module",
   "scripts": {
+    "start": "node --env-file=.env --permission --allow-fs-read=/var/log/\\* --allow-fs-read=. creep.js",
     "test": "nah lol",
     "dev": "nodemon --env-file=.env creep.js"
   },
