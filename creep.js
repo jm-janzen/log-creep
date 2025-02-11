@@ -29,7 +29,7 @@ app.get('/get-files', (req, res) => {
 
 app.get('/get-file-lines', async (req, res) => {
     const { path = '/', numLines, match } = req.query
-    const items = await getFileLines(path, numLines, match)
+    const items = await getFileLines(path, Number(numLines), match)
 
     res.send({
         data: {
