@@ -28,8 +28,8 @@ app.get('/get-files', (req, res) => {
 })
 
 app.get('/get-file-lines', (req, res) => {
-    const { path = '/', numLines = '' } = req.query
-    const items = getFileLines(path, numLines)
+    const { path = '/', numLines = '', pattern } = req.query
+    const items = getFileLines(path, numLines, pattern)
 
     res.send({
         data: {
