@@ -10,4 +10,5 @@ export function getFileLines(filePath, numLines = 0) {
         .toString()
         .split(/\n/)
         .slice(numLines * -1)
+        .reverse()
 }
