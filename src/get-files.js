@@ -7,6 +7,10 @@ export function getFiles(path = '/', match = '') {
     // TODO Check if dir, else throw err
     // TODO Ensure dir not escaping BASE_DIR (sneaky /../../ for example)
     return fs.readdirSync(fullPath)
-        // TODO Filter out dirs? Maybe just note...
         .filter(fileName => fileName.includes(match))
+        .map(fileName => {
+            return fs.lstatSync(`${fullPath}/${fileName}`).isDirectory()
+            ? fileName + '/'
+            : fileName
+        })
 }
