@@ -20,9 +20,7 @@ app.get('/get-files', (req, res) => {
     res.send({
         data: {
             kind: 'files',
-            match,
             items,
-            path,
         }
     })
 })
