@@ -1,4 +1,4 @@
-# Log Creep
+# Log Creep 👺
 
 Service to expose system logs of the host machine.
 
@@ -23,4 +23,11 @@ If you'd like the server to automatically restart on source changes, substitute 
 
 ```zsh
 npm run dev
+```
+
+### Change log base directory of log files
+
+By default, the **log-creep** 👺 will creep the logs in `/var/logs/`, but this can be changed by updated the env var `BASE_DIR`. Like so
+```zsh
+echo BASE_DIR=/home/creep/logs/ > .env
 ```
