@@ -1,41 +1,49 @@
 import fs from 'fs'
-import readline from 'readline'
 
 
 export async function getFileLines(filePath, numLines = 0, match = '') {
     const { BASE_DIR } = process.env
+    const fullPath = `${BASE_DIR}/${filePath}`
 
+    // TODO Actually loop over file from bottom up
+    const size = fs.statSync(fullPath).size
+    const options = {
+        start: 0,
+        end: size,
+    }
     return new Promise((resolve, reject) => {
-        const lines = []
-        const stream = fs.createReadStream(`${BASE_DIR}/${filePath}`)
-        // TODO Investigate if straight up buffer is preferrable
-        const lr = readline.createInterface({ input: stream })
+        const matchingLines = []
+        const stream = fs.createReadStream(fullPath, options)
 
-        lr.on('error', (error) => {
+
+        stream.on('error', (error) => {
             stream.close
 
             reject(error)
         })
 
-        lr.on('line', (line) => {
-            // TODO Start from bottom?
-            if (lines.length < numLines) {
-                // TODO Handle case where no 'match' specified
-                // Shouldn't have to check for substring on each line!
-                if (line.includes(match)) {
-                    lines.push(line)
-                }
-            } else {
-                // TODO Check difference between this and rl.close()
-                stream.close()
+        stream.on('data', (chunk) => {
 
-                resolve(lines)
+            const lines = chunk.toString().split('\n')
+
+            for (const line of lines) {
+                console.log(`Checking if ${match} matching ${line}`)
+                if (!match) {
+                    matchingLines.push(line)
+                } else if (line.includes(match)) {
+                    matchingLines.push(line)
+                }
+
+                if (matchingLines.length >= numLines) {
+                    resolve(matchingLines)
+                    return
+                }
             }
 
         })
 
-        lr.on('close', () => {
-            resolve(lines)
+        stream.on('close', () => {
+            resolve(matchingLines)
         })
     })
 
