@@ -6,7 +6,6 @@ Service to expose system logs of the host machine.
 
 ```zsh
 npm ci
-cp .env.example .env
 npm start
 curl localhost:9002/health # Check is running
 curl localhost:9002/get-files # List files at /var/log
