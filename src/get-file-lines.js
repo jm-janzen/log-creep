@@ -1,20 +1,24 @@
 import fs from 'fs'
 
 
+// BUG Won't find 'match' if it's on the first line of the file
 export async function getFileLines(filePath, numLines = 0, match = '') {
     const { BASE_DIR } = process.env
     const fullPath = `${BASE_DIR}/${filePath}`
+
+    const length = 10
     const size = fs.statSync(fullPath).size
-    const options = {
-        start: 0,
-        end: size,
-    }
     const matchingLines = []
 
-    // TODO Actually loop over file from bottom up
     return new Promise((resolve, reject) => {
-        const stream = fs.createReadStream(fullPath, options)
 
+        let text = ''
+        let start = size - Math.min(size, length)
+        let end = size
+        while (start >= 0) {
+
+        console.log(`Reading from ${start} to ${end} out of ${size}`)
+        const stream = fs.createReadStream(fullPath, { start, end })
 
         stream.on('error', (error) => {
             stream.close
@@ -24,10 +28,12 @@ export async function getFileLines(filePath, numLines = 0, match = '') {
 
         stream.on('data', (chunk) => {
 
-            const lines = chunk.toString().split('\n')
+            text += chunk
+            const lines = text.split('\n')
+            text = lines.shift()
 
             for (const line of lines) {
-                console.log(`Checking if ${match} matching ${line}`)
+                console.log(`Checking if ${match} matching '${line}'. Remaining:`, text)
                 if (!match) {
                     matchingLines.push(line)
                 } else if (line.includes(match)) {
@@ -45,6 +51,11 @@ export async function getFileLines(filePath, numLines = 0, match = '') {
         stream.on('close', () => {
             resolve(matchingLines)
         })
+
+        start = start - Math.min(size, length)
+        end -= length
+
+        }
     })
 
 }
