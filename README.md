@@ -4,7 +4,7 @@ Service to expose system logs of the host machine.
 
 ## How to run and use service
 
-```zsh
+```shell
 npm ci
 npm start
 curl localhost:9002/health # Check is running
@@ -21,13 +21,13 @@ curl 'localhost:9002/get-file-lines?path=dog/gertie&numLines=10&pattern=woof'
 
 If you'd like the server to automatically restart on source changes, substitute `npm start` above with:
 
-```zsh
+```shell
 npm run dev
 ```
 
 ### Change log base directory of log files
 
 By default, the **log-creep** 👺 will creep the logs in `/var/logs/`, but this can be changed by updated the env var `BASE_DIR`. Like so
-```zsh
+```shell
 echo BASE_DIR=/home/creep/logs/ > .env
 ```
