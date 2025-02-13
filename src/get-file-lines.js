@@ -4,15 +4,15 @@ import fs from 'fs'
 export async function getFileLines(filePath, numLines = 0, match = '') {
     const { BASE_DIR } = process.env
     const fullPath = `${BASE_DIR}/${filePath}`
-
-    // TODO Actually loop over file from bottom up
     const size = fs.statSync(fullPath).size
     const options = {
         start: 0,
         end: size,
     }
+    const matchingLines = []
+
+    // TODO Actually loop over file from bottom up
     return new Promise((resolve, reject) => {
-        const matchingLines = []
         const stream = fs.createReadStream(fullPath, options)
 
 
