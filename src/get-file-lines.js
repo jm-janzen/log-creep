@@ -33,7 +33,7 @@ export async function getFileLines(filePath, numLines = 1, match) {
                 }
 
                 if (matchingLines.length >= numLines) {
-                    resolve(matchingLines)
+                    return resolve(matchingLines)
                 }
             }
         }
