@@ -3,7 +3,7 @@ import { getFiles } from './src/get-files.js'
 import { getFileLines } from './src/get-file-lines.js'
 
 
-const PORT = 9002
+const { PORT = 9002, BASE_DIR = '/var/log' } = process.env
 
 const app = express()
 
@@ -38,5 +38,6 @@ app.get('/get-file-lines', async (req, res) => {
 })
 
 app.listen(PORT, () => {
-    console.info(`I'm up: localhost:${PORT}`)
+    console.info(`I'm up at: localhost:${PORT}`)
+    console.info(`Serving from: ${BASE_DIR}`)
 })
