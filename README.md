@@ -25,9 +25,34 @@ If you'd like the server to automatically restart on source changes, substitute 
 npm run dev
 ```
 
-### Change log base directory of log files
+### Change base directory of log files
 
-By default, the **log-creep** 👺 will creep the logs in `/var/logs/`, but this can be changed by updated the env var `BASE_DIR`. Like so
+By default, the **log-creep** 👺 will creep the logs in `/var/logs/`, but this can be changed by updated the env var `BASE_DIR`. Like so:
 ```shell
 echo BASE_DIR=/home/creep/logs/ > .env
+```
+
+### Manual examples
+
+Create some files and place them where ever you're serving files from (`BASE_DIR`).
+```shell
+# Create a reasonably sized file
+for i in $(seq 1 100000); do echo "$i meow"; done > 100000-meows.log
+# Some example request
+curl 'localhost:9002/get-file-lines?path=100000-meows.log&numLines=100&match=5000'
+curl 'localhost:9002/get-file-lines?path=100000-meows.log&numLines=100&match=meow'
+curl 'localhost:9002/get-file-lines?path=100000-meows.log&numLines=100&match=5000%20'
+curl 'localhost:9002/get-file-lines?path=100000-meows.log&numLines=999999'
+
+# Create a large file
+yes meow | head -c 2GB > 2GB-meows.log
+# Insert WOOFs in bot, mid, top
+echo 'WOOF!' >> 2GB-meows.log
+curl 'localhost:9002/get-file-lines?path=2GB-meows.log&match=WOOF'
+
+sed -i '200000000 i WOOF!' 2GB-meows.log
+curl 'localhost:9002/get-file-lines?path=2GB-meows.log&match=WOOF&numLines=2'
+
+sed -i '1 i WOOF!' 2GB-meows.log
+curl 'localhost:9002/get-file-lines?path=2GB-meows.log&match=WOOF&numLines=999'
 ```
