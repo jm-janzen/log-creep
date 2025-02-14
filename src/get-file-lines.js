@@ -19,7 +19,7 @@ export async function getFileLines(filePath, numLines, match) {
 
             fs.readSync(fd, buffer, { start, length })
 
-            text += buffer.toString()
+            text = buffer + text
 
             console.log(`Reading from ${start} to ${start + length} out of ${size}`, {text})
 
