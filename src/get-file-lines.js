@@ -8,24 +8,29 @@ export async function getFileLines(filePath, numLines, match) {
     const fd = fs.openSync(fullPath)
     const matchingLines = []
 
-    // TODO Actually loop over file from bottom up
     return new Promise((resolve) => {
+        let text = ''
         let start = size
         while (start > 0) {
-            const length = 32
+            const length = Math.min(64 * 1024, start)
             const buffer = Buffer.alloc(length)
 
             start = start - length
 
             fs.readSync(fd, buffer, { start, length })
 
-            const text = buffer.toString()
+            text += buffer.toString()
 
             console.log(`Reading from ${start} to ${start + length} out of ${size}`, {text})
 
             const lines = text.split('\n')
 
-            for (const line of lines) {
+            // Save incomplete line back on to our text 'buffer' (not a real buffer)
+            text = lines.shift()
+
+            while (lines.length) {
+                const line = lines.pop()
+
                 if (!match || line.includes(match)) {
                     matchingLines.push(line)
                 }
