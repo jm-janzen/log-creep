@@ -20,9 +20,6 @@ export async function getFileLines(filePath, numLines, match) {
             fs.readSync(fd, buffer, { position: start, length })
 
             text = buffer + text
-
-            console.log(`Reading from ${start} to ${start + length} out of ${size}`, {text})
-
             const lines = text.split('\n')
 
             // Save incomplete line back on to our text 'buffer' (not a real buffer)
