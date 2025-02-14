@@ -26,9 +26,7 @@ export async function getFileLines(filePath, numLines = 1, match) {
             const lines = text.split('\n')
 
             for (const line of lines) {
-                if (!match) {
-                    matchingLines.push(line)
-                } else if (line.includes(match)) {
+                if (!match || line.includes(match)) {
                     matchingLines.push(line)
                 }
 
