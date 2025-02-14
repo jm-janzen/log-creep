@@ -2,6 +2,14 @@ import fs from 'fs'
 
 
 /**
+ * Returns specified number of matching lines from given file.
+ * If no 'match' specified, just return the number of lines specified,
+ * up to the maximum number of lines in the file.
+ *
+ * Returns lines from the bottom of the file first.
+ *
+ * BUG If the file ends in a newline, and numLines=1 specified
+ * without anything to match, then a blank line [""] will be returned.
  *
  * @param {string} filePath valid path starting with BASE_DIR
  * @param {number} numLines number of lines to return
