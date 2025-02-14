@@ -31,7 +31,11 @@ export async function getFileLines(filePath, numLines, match) {
             // a complete line)
             text = buffer + text
             const lines = text.split('\n')
-            text = lines.shift()
+            // If we're at the top of the file, we're not going to get any more
+            // so don't shift it away
+            if (start > 0) {
+                text = lines.shift()
+            }
 
             while (lines.length) {
                 const line = lines.pop()
