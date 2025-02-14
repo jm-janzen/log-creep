@@ -17,7 +17,7 @@ export async function getFileLines(filePath, numLines, match) {
 
             start = start - length
 
-            fs.readSync(fd, buffer, { start, length })
+            fs.readSync(fd, buffer, { position: start, length })
 
             text = buffer + text
 
