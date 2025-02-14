@@ -1,7 +1,7 @@
 import fs from 'fs'
 
 
-export async function getFileLines(filePath, numLines = 1, match) {
+export async function getFileLines(filePath, numLines, match) {
     const { BASE_DIR } = process.env
     const fullPath = `${BASE_DIR}/${filePath}`
     const size = fs.statSync(fullPath).size
