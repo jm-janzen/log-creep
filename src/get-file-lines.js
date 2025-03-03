@@ -30,13 +30,12 @@ export async function getFileLines(filePath, numLines, match) {
             const length = Math.min(64 * 1024, start)
             const buffer = Buffer.alloc(length)
 
-            start = start - length
+            start -= length
 
             fs.readSync(fd, buffer, { position: start, length })
 
             // Shift incomplete line back on to our text 'buffer' (not a real buffer)
-            // on to our text 'buffer' (not a real buffer) for next read (when we have
-            // a complete line)
+            // for next read (when we have a complete line)
             text = buffer + text
             const lines = text.split('\n')
             // If we're at the top of the file, we're not going to get any more
