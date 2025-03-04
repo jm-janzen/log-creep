@@ -19,11 +19,11 @@ import fs from 'fs'
 export async function getFileLines(filePath, numLines, match) {
     const { BASE_DIR } = process.env
     const fullPath = `${BASE_DIR}/${filePath}`
-    const size = fs.statSync(fullPath).size
-    const fd = fs.openSync(fullPath)
+    const size = (await fs.promises.stat(fullPath)).size
+    const fd = await fs.promises.open(fullPath)
     const matchingLines = []
 
-    return new Promise((resolve) => {
+    return new Promise(async (resolve) => {
         let text = ''
         let start = size
         while (start > 0) {
@@ -32,7 +32,7 @@ export async function getFileLines(filePath, numLines, match) {
 
             start -= length
 
-            fs.readSync(fd, buffer, { position: start, length })
+            await fd.read(buffer, { position: start, length })
 
             // Shift incomplete line back on to our text 'buffer' (not a real buffer)
             // for next read (when we have a complete line)
