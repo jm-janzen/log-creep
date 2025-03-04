@@ -52,12 +52,13 @@ export async function getFileLines(filePath, numLines, match) {
                 }
 
                 if (matchingLines.length >= numLines) {
+                    fd.close()
                     return resolve(matchingLines)
                 }
             }
         }
 
+        fd.close()
         resolve(matchingLines)
     })
-
 }
