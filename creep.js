@@ -28,11 +28,6 @@ app.get('/get-files', (req, res) => {
 app.get('/get-file-lines', async (req, res) => {
     const { path = '/', numLines = 1, match } = req.query
 
-    res.writeHead(200, {
-        'Content-Type': 'text/plain',
-        'Connection': 'keep-alive',
-    })
-    res.flushHeaders()
 
     await getFileLines(path, Number(numLines), match, res)
     res.end()
