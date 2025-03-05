@@ -21,6 +21,13 @@ export async function getFileLines(filePath, numLines, match, res) {
     const { BASE_DIR } = process.env
     const fullPath = `${BASE_DIR}/${filePath}`
     const size = (await fs.promises.stat(fullPath)).size
+
+    // Nothing to see here
+    if (size === 0) {
+        res.status(204)
+        return res.end()
+    }
+
     const fd = await fs.promises.open(fullPath)
 
     let text = ''
