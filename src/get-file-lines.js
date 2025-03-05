@@ -48,7 +48,7 @@ export async function getFileLines(filePath, numLines, match, res) {
 
         start -= length
 
-        await fd.read(buffer, { position: start, length })
+        await fd.read(buffer, start, length)
 
         // Shift incomplete line back on to our text 'buffer' (not a real buffer)
         // for next read (when we have a complete line)
