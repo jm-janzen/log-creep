@@ -28,8 +28,13 @@ app.get('/get-files', (req, res) => {
 app.get('/get-file-lines', async (req, res) => {
     const { path = '/', numLines = 1, match } = req.query
 
+    try {
+        await getFileLines(path, Number(numLines), match, res)
+    } catch (e) {
+        const statusCode = e.statusCode || 500
+        res.status(statusCode).send(e.message)
+    }
 
-    await getFileLines(path, Number(numLines), match, res)
     res.end()
 })
 
