@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "start": "node --env-file=.env --permission --allow-fs-read=/var/log/\\* --allow-fs-read=. creep.js",
-    "test": "nah lol",
+    "test": "jest",
     "dev": "nodemon --env-file=.env creep.js"
   },
   "repository": {
@@ -23,9 +23,14 @@
     "express": "^4.21.2"
   },
   "devDependencies": {
+    "@babel/core": "^7.26.9",
+    "@babel/preset-env": "^7.26.9",
     "@eslint/js": "^9.20.0",
+    "babel-jest": "^29.7.0",
     "eslint": "^9.20.0",
     "globals": "^15.14.0",
+    "jest": "^29.7.0",
+    "mock-fs": "^5.5.0",
     "nodemon": "^3.1.9"
   }
 }
