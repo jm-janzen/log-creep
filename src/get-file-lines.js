@@ -14,17 +14,18 @@ import fs from 'fs'
  * @param {string} filePath valid path starting with BASE_DIR
  * @param {number} numLines number of lines to return
  * @param {string} match text to match within lines (if any)
- * @returns string[]
+ * @param {res} Response object to write to
+ * @returns undefined
  */
-export async function getFileLines(filePath, numLines, match) {
+export async function getFileLines(filePath, numLines, match, res) {
     const { BASE_DIR } = process.env
     const fullPath = `${BASE_DIR}/${filePath}`
     const size = (await fs.promises.stat(fullPath)).size
     const fd = await fs.promises.open(fullPath)
-    const matchingLines = []
 
     let text = ''
     let start = size
+    let numMatched = 0
     while (start > 0) {
         const length = Math.min(64 * 1024, start)
         const buffer = Buffer.alloc(length)
@@ -47,16 +48,18 @@ export async function getFileLines(filePath, numLines, match) {
             const line = lines.pop()
 
             if (!match || line.includes(match)) {
-                matchingLines.push(line)
+                numMatched++
+                // FIXME Write out with nice event-stream fmt
+                res.write(`${line}\n`)
             }
 
-            if (matchingLines.length >= numLines) {
+            if (numMatched >= numLines) {
                 fd.close()
-                return matchingLines
+                return
             }
         }
     }
 
     fd.close()
-    return matchingLines
+    return
 }
