@@ -20,12 +20,21 @@ import fs from 'fs'
 export async function getFileLines(filePath, numLines, match, res) {
     const { BASE_DIR } = process.env
     const fullPath = `${BASE_DIR}/${filePath}`
-    const size = (await fs.promises.stat(fullPath)).size
+
+    let size = 0
+    try {
+        size = (await fs.promises.stat(fullPath)).size
+    } catch (e) {
+        // We get a lil' hacky hehe
+        throw Object.assign(
+            Error(`Invalid path: '${filePath}'`),
+            { statusCode: 404 },
+        )
+    }
 
     // Nothing to see here
     if (size === 0) {
-        res.status(204)
-        return res.end()
+        return res.status(204)
     }
 
     const fd = await fs.promises.open(fullPath)
